@@ -7,12 +7,22 @@
 #include "process.h"
 #include "processor.h"
 #include "system.h"
-#include "linux_parser.h"
+//#include "linux_parser.h"
 
 using std::set;
 using std::size_t;
 using std::string;
 using std::vector;
+
+System::System() {
+    // Populate processes_ vector
+    auto pids_vector = LinuxParser::Pids();
+    for (auto pid: pids_vector){
+        Process new_process = Process(pid);
+        processes_.push_back(new_process);
+    }
+    cpu_ = Processor();
+}
 
 // TODO: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
