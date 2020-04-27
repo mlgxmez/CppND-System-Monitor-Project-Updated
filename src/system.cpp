@@ -3,16 +3,17 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "process.h"
 #include "processor.h"
 #include "system.h"
-//#include "linux_parser.h"
 
 using std::set;
 using std::size_t;
 using std::string;
 using std::vector;
+using std::sort;
 
 System::System() {
     // Populate processes_ vector
@@ -28,7 +29,11 @@ System::System() {
 Processor& System::Cpu() { return cpu_; }
 
 // TODO: Return a container composed of the system's processes
-vector<Process>& System::Processes() { return processes_; }
+vector<Process>& System::Processes() { 
+    // Processes must be resorted here
+    sort(processes_.begin(), processes_.end());
+    return processes_; 
+    }
 
 // TODO: Return the system's kernel identifier (string)
 std::string System::Kernel() { return LinuxParser::Kernel(); }
