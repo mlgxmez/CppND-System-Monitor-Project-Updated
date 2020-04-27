@@ -6,6 +6,17 @@ Follow along with the classroom lesson to complete the project!
 
 ![System Monitor](images/monitor.png)
 
+## My solution
+After following the steps in the project description, a screenshot of the resulting system monitor is shown below these lines.
+
+![Screenshot solution](images/custom_htop_final_version.png)
+
+To get that command window you'll have to go step-by-step, according to the instructions stated below:
+1. Here we assume the user has Visual Studio Code and Docker installed in their computer. It is also needed to have installed the extension [Remote-Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack).
+2. Inside the project folder click on the icon in the bottom left corner an choose **Remote-Containers: Reopen in container**.
+3. Execute in the container's terminal: `make build`
+4. And then: `./build/monitor`
+
 ## Udacity Linux Workspace
 [Udacity](https://www.udacity.com/) provides a browser-based Linux [Workspace](https://engineering.udacity.com/creating-a-gpu-enhanced-virtual-desktop-for-udacity-497bdd91a505) for students. 
 
