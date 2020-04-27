@@ -106,25 +106,25 @@ long LinuxParser::UpTime() {
   }
 
 // TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { 
-  // Sum all values of cpu
-  string line, word;
-  int jiffies = 0;
-  std::ifstream jfstream(kProcDirectory+kStatFilename);
-  if(jfstream.is_open()) {
-    std::getline(jfstream, line);
-    std::istringstream linestream(line);
-    int count = 1;
-    while(linestream >> word){
-      if (count !=1){
-        jiffies += stoi(word);
-      }
-      count++;
-    }
-    return jiffies;
-  }
-  return jiffies;
-}
+// long LinuxParser::Jiffies() { 
+//   // Sum all values of cpu
+//   string line, word;
+//   int jiffies = 0;
+//   std::ifstream jfstream(kProcDirectory+kStatFilename);
+//   if(jfstream.is_open()) {
+//     std::getline(jfstream, line);
+//     std::istringstream linestream(line);
+//     int count = 1;
+//     while(linestream >> word){
+//       if (count !=1){
+//         jiffies += stoi(word);
+//       }
+//       count++;
+//     }
+//     return jiffies;
+//   }
+//   return jiffies;
+// }
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
@@ -175,26 +175,27 @@ long LinuxParser::ActiveJiffies(int pid) {
 //   }
 
 // TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { 
-  string line;
-  string k0, k1, k2, k3, k4;
-  int jiffies = 0;
-  std::ifstream ajfstream(kProcDirectory+kStatFilename);
-  if(ajfstream.is_open()) {
-    std::getline(ajfstream, line);
-    std::istringstream linestream(line);
-    linestream >> k0 >> k1 >> k2 >> k3 >> k4;
-    jiffies = stoi(k4);
-  }
-  return jiffies;  
-  }
+// long LinuxParser::IdleJiffies() { 
+//   string line;
+//   string k0, k1, k2, k3, k4;
+//   int jiffies = 0;
+//   std::ifstream ajfstream(kProcDirectory+kStatFilename);
+//   if(ajfstream.is_open()) {
+//     std::getline(ajfstream, line);
+//     std::istringstream linestream(line);
+//     linestream >> k0 >> k1 >> k2 >> k3 >> k4;
+//     jiffies = stoi(k4);
+//   }
+//   return jiffies;  
+//   }
 
 // TODO: Read and return CPU utilization
 float LinuxParser::CpuUtilization(int pid) { 
   double total_time = ActiveJiffies(pid);
-  double uptime = UpTime(pid);
-  double seconds = total_time - uptime;
-  return 100*(total_time/sysconf(_SC_CLK_TCK))/seconds; 
+  //long uptime_system = UpTime();
+  long uptime_process = UpTime(pid);
+  //double seconds = total_time - uptime;
+  return 100*(total_time/sysconf(_SC_CLK_TCK))/uptime_process; 
   }
 
 // TODO: Read and return the total number of processes
@@ -323,7 +324,7 @@ long LinuxParser::UpTime(int pid) {
       }
       word_ix++;
     }
-    seconds = stof(word)/sysconf(_SC_CLK_TCK);
+    seconds = UpTime() - stof(word)/sysconf(_SC_CLK_TCK);
   }
   return seconds; 
   }
