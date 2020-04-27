@@ -4,5 +4,4 @@ settings.json
 *.o
 build/*
 *.json
-.devcontainer/
 .DS_Store
